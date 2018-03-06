@@ -6,6 +6,7 @@
   "scripts": {
     "start": "./node_modules/.bin/static",
     "lint": "./node_modules/.bin/eslint src/**/*.js",
+    "pug": "./node_modules/.bin/pug -c --extension pug.js --watch --pretty --name-after-file src/components/**/*.pug",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,7 +22,9 @@
   "devDependencies": {
     "eslint": "^4.18.1",
     "eslint-config-google": "^0.9.1",
-    "node-static": "^0.7.10"
+    "node-static": "^0.7.10",
+    "pug": "^2.0.0",
+    "pug-cli": "^1.0.0-alpha6"
   },
   "dependencies": {
     "milligram": "^1.3.0"
