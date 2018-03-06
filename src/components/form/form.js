@@ -1,36 +1,24 @@
 export class Form {
-	constructor({el, onUserData}) {
-		this.el = el;
-		this.onUserData = onUserData;
-		this._initEvents();
-	}
+    constructor({el, onSubmit}) {
+        this.el = el;
 
-	_initEvents() {
-		this.el.addEventListener('submit', this._onSubmit.bind(this));
-	}
+        this.el.addEventListener('submit', this._onSubmit.bind(this));
+        this.onSubmit = onSubmit;
+    }
 
-	_onSubmit(event) {
-		event.preventDefault();
-		const formEl = event.target;
-		const messageData = {};
+    render() {
+        this.el.innerHTML = `
+            <form>
+                <textarea></textarea>
+                <input type="submit" value="Отправить">
+            </form>
+        `;
+    }
 
-		Array.from(formEl.querySelectorAll('[name]')).forEach((el) => {
-			messageData[el.name] = el.value;
-		});
-
-		this.onUserData(messageData);
-
-		this.el.querySelector('form').reset();
-	}
-
-	render() {
-		this.el.innerHTML = `
-			<form>
-				<input name="nickname" type="text" placeholder="Имя пользователя"></input>
-				<br>
-				<textarea name="text"></textarea>
-				<input type="submit" value="Отправить">
-			</form>
-		`;
-	}
+    _onSubmit(event) {
+        event.preventDefault();
+        this.onSubmit({
+            text: event.target.querySelector('textarea').value
+        });
+    }
 }

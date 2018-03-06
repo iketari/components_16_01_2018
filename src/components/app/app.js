@@ -2,25 +2,37 @@ import {Chat} from './../chat/chat.js';
 import {Form} from './../form/form.js';
 
 export class App {
-	constructor({el}) {
-		this.el = el;
+    constructor({el}) {
+        this.el = el;
+        this.chat = new Chat({
+            el: document.createElement('div')
+        });
+        this.form = new Form({
+            el: document.createElement('div'),
+            onSubmit: this._onFormSubmit.bind(this)
+        });
 
-		const chat = new Chat({
-			el: document.createElement('div'),
-			data: {}
-		});
+        this.el.append(this.chat.el, this.form.el);
+        this.chat.add([
+            {
+                name: 'AI',
+                text: 'Привет, я чат!'
+            }
+        ]);
 
-		const form = new Form({
-			el: document.createElement('div'),
-			onUserData: (messageData) => {
-				chat.addMessage(messageData);
-			},
-		});
+        this.render();
+    }
 
+    render() {
+        this.chat.render();
+        this.form.render();
+    }
 
-		this.el.append(chat.el, form.el);
-		chat.render();
-		form.render();
-		// здесь будем использовать Form, Chat
-	}
+    _onFormSubmit({text}) {
+        this.chat.addOne({
+            text,
+            name: 'Me'
+        });
+        this.render();
+    }
 }
