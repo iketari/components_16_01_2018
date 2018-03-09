@@ -13,7 +13,11 @@ export class Form {
                 <input type="submit" value="Отправить">
             </form>
         `;
-    }
+	}
+
+	reset() {
+		this.el.querySelector('form').reset();
+	}
 
     _onSubmit(event) {
         event.preventDefault();

@@ -1,0 +1,11 @@
+{
+	"chat": {
+		"messages": [
+			{
+				"name": "Pseudo server",
+				"text": "some text",
+				"nul": 2443
+			}
+		]
+	}
+}
