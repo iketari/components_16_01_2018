@@ -1,13 +1,13 @@
 div.chat
     div.chat__container
         div.header
-            h2 You are logged in as ...
+            h2 You are logged in as %username%
         div.chat__box
             each message in messages
-                div.message-box.left-img
+                div(class="message-box " + (message.isMine ? "right-img" : "left-img"))
                     div.picture
-                        img(src="https://unsplash.it/200/200/?random=0.07515586249598627")
-                        span.time 21:30
+                        img(src= message.avatar)
+                        span.time= message.date.getHours() + ':' + message.date.getMinutes()
                     div.message
-                        span= message.name
-                        p= message.text
+                        span=message.name
+                        p=message.text

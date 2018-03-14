@@ -2,17 +2,13 @@
 
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="./src/components/app/milligram.css">
+    <script src="./src/components/form/form.pug.js"></script>
     <script src="./src/components/chat/chat.pug.js"></script>
-    <link rel="stylesheet" href="./src/components/chat/chat.css">
-    <link rel="stylesheet" href="./src/components/app/app.css">
 </head>
 
 <body>
     <div class="js-app app"></div>
-    <script type="module">
-        import { App } from "./src/components/app/app.js"; new App({ el: document.querySelector('.js-app') });
-    </script>
+    <script src="./dist/bundle.js"></script>
 </body>
 
 </html>

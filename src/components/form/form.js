@@ -7,17 +7,8 @@ export class Form {
     }
 
     render() {
-        this.el.innerHTML = `
-            <form>
-                <textarea></textarea>
-                <input type="submit" value="Отправить">
-            </form>
-        `;
-	}
-
-	reset() {
-		this.el.querySelector('form').reset();
-	}
+        this.el.innerHTML = formTemplate();
+    }
 
     _onSubmit(event) {
         event.preventDefault();

@@ -1,44 +1,49 @@
 import {Chat} from './../chat/chat.js';
 import {Form} from './../form/form.js';
 
-const CHAT_ENDPOINT = 'https://components2510.firebaseio.com/chat.json';
+import HttpService from './../../modules/http.service.js';
+import ChatService from './../../modules/chat.service.js';
+
+import './milligram.css';
+import './app.css';
+
+
+const USER_NAME = 'Artsiom';
+
 
 export class App {
     constructor({el}) {
         this.el = el;
         this.chat = new Chat({
             el: document.createElement('div'),
+            data: {
+                messages: [],
+                user: USER_NAME
+            }
         });
         this.form = new Form({
             el: document.createElement('div'),
-            onSubmit: this._onFormSubmit.bind(this),
+            onSubmit: this._onFormSubmit.bind(this)
         });
 
         this.el.append(this.chat.el, this.form.el);
 
-        setInterval(this.fetchData.bind(this), 1000);
-        this.render();
-    }
+        const httpService = new HttpService();
 
-    fetchData() {
-        fetch(CHAT_ENDPOINT)
-            .then((res) => {
-                return res.json();
-            })
-            .then((data) => {
-                this.chat.setMessages(Object.values(data));
-                this.chat.render();
-            });
-    }
-
-    postData(data) {
-        fetch(CHAT_ENDPOINT, {
-            method: 'POST', // or 'PUT'
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Content-Type': 'application/json',
-            }),
+        this.chatService = new ChatService({
+            http: httpService,
+            pollingInterval: 1000
         });
+
+        this.chatService.setUserName(USER_NAME);
+
+        this.chatService.on('messages', (messages) => {
+            this.chat.add(messages);
+            this.chat.render();
+        });
+
+        this.chatService.startPolling();
+        this.render();
     }
 
     render() {
@@ -46,8 +51,12 @@ export class App {
         this.form.render();
     }
 
-    _onFormSubmit(messageData) {
-        this.form.reset();
-        this.postData(messageData);
+    _onFormSubmit({text}) {
+        this.chatService.sendMessage({
+            text,
+        });
+
+        this.chat.setScrollStrategy('bottom');
+        this.form.render();
     }
 }

@@ -1,3 +1,8 @@
+import {avatarService} from '../../modules/avatar.service.js';
+
+import './chat.css';
+// import chatTemplate from './chat.pug';
+
 export class Chat {
     constructor({el, data = {messages: []}}) {
         this.el = el;
@@ -12,8 +17,12 @@ export class Chat {
 
     render({scroll} = {}) {
         this._saveScrollTop();
-		this.el.innerHTML = chatTemplate(this.data);
+        this.el.innerHTML = this._getHtml(this.data);
         this._restoreScrollTop(scroll);
+    }
+
+    _getHtml() {
+        return chatTemplate(this.data);
     }
 
     _saveScrollTop() {
@@ -55,7 +64,7 @@ export class Chat {
 
     add(messages = []) {
         let addOneMessageMethod = this.addOne.bind(this);
-
+        this.data.messages = [];
         messages.forEach(addOneMessageMethod);
     }
 
@@ -67,6 +76,7 @@ export class Chat {
         return {
             name,
             isMine: name === this.data.user,
+            avatar: avatarService.getByName(name),
             text,
             date: new Date(date),
             html
