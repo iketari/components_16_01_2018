@@ -1,3 +1,5 @@
+import tmpl from './form.pug';
+
 export class Form {
     constructor({el, onSubmit}) {
         this.el = el;
@@ -7,7 +9,7 @@ export class Form {
     }
 
     render() {
-        this.el.innerHTML = formTemplate();
+		this.el.innerHTML = tmpl();
     }
 
     _onSubmit(event) {

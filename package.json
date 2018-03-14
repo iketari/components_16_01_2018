@@ -6,7 +6,7 @@
   "scripts": {
     "start": "./node_modules/.bin/static",
     "lint": "./node_modules/.bin/eslint src/**/*.js",
-    "pug": "./node_modules/.bin/pug -c --extension pug.js --watch --pretty --name-after-file src/components/**/*.pug",
+    "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,7 +20,6 @@
   },
   "homepage": "https://github.com/iketari/components_16_01_2018#readme",
   "devDependencies": {
-    "@babel/preset-env": "^7.0.0-beta.40",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
@@ -32,7 +31,7 @@
     "pug-cli": "^1.0.0-alpha6",
     "pug-loader": "^2.3.0",
     "style-loader": "^0.20.3",
-    "webpack": "^4.1.1",
+    "webpack": "^3.11.0",
     "webpack-cli": "^2.0.11"
   },
   "dependencies": {

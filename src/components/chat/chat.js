@@ -1,7 +1,7 @@
 import {avatarService} from '../../modules/avatar.service.js';
-
+import tmpl from './chat.pug';
 import './chat.css';
-// import chatTemplate from './chat.pug';
+
 
 export class Chat {
     constructor({el, data = {messages: []}}) {
@@ -22,7 +22,7 @@ export class Chat {
     }
 
     _getHtml() {
-        return chatTemplate(this.data);
+		return tmpl(this.data);
     }
 
     _saveScrollTop() {

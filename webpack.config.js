@@ -1,41 +1,43 @@
 module.exports = {
 	entry: './src/main.js',
 	output: {
-		filename: 'bundle.js',
+		filename: './dist/bundle.js',
 	},
-	mode: 'development',
+	devtool: 'eval-source-map',
 	module: {
 		rules: [
 			{
-				test: /\.css$/,
-				use: [
-					{ loader: 'style-loader' },
-					{ loader: 'css-loader' },
-				],
+				test: /\.pug$/,
+				use: 'pug-loader'
 			},
-			// {
-			// 	test: /\.pug$/,
-			// 	use: [
-			// 		{ loader: 'pug-loader' }
-			// 	],
-			// },
-			// {
-			// 	test: /\.js$/,
-			// 	exclude: /node_modules/,
-			// 	use: {
-			// 		loader: 'babel-loader',
-			// 		options: {
-			// 			presets: ['@babel/env', {
-			// 				targets: {
-			// 					browsers: [
-			// 						'last 2 versions',
-			// 						'not IE <= 10',
-			// 					],
-			// 				},
-			// 			}],
-			// 		}
-			// 	}
-			// }
-		],
+			{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				use: [{
+					loader: 'babel-loader',
+					options: {
+						babelrc: false,       // брать настройки из options
+						cacheDirectory: false, // включить кширование (node_modules/.cache/babel-loader)
+						presets: [
+							[
+								'env',
+								{
+									targets: {
+										browsers: ['last 2 versions'],
+										chrome: 49,
+										safari: 9,
+									},
+									debug: true
+								}
+							]
+						]
+					},
+				}],
+			},
+			{
+				test: /\.css$/,
+				use: ['style-loader', 'css-loader']
+			}
+		]
 	},
 };
